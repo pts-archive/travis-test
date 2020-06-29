@@ -29,7 +29,7 @@ before_install:
   - chmod +x phive.phar
   - mkdir -p "$HOME/bin"
   - export PATH="$HOME/bin:$PATH"
-  - mv phive.phar /usr/local/bin/phive
+  - mv phive.phar $HOME/bin/phive
 
 install:
   - composer install
