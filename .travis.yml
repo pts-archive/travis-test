@@ -1,23 +1,48 @@
 os: linux
 dist: xenial
 language: php
-php:
-  - 7.0
-  - 7.1
-  - 7.2
-  - 7.3
-  - 7.4
+
+jobs:
+  include:
+    - php: 7.0
+      env: USE_PHIVE=false
+    - php: 7.1
+      env: USE_PHIVE=false
+    - php: 7.2
+      env: USE_PHIVE=true
+    - php: 7.3
+      env: USE_PHIVE=true
+    - php: 7.4
+      env: USE_PHIVE=true
+
+cache:
+ directories:
+    - "$HOME/.phive"
+    - "$HOME/.phive/phars"
+    - "$HOME/.cache/composer"
+    - "$HOME/.composer/cache"
+    - "$HOME/.gnupg"
 
 notifications:
     on_success: never
     on_failure: always
 
+before_install:
+  - if $USE_PHIVE; then wget -O phive.phar "https://phar.io/releases/phive.phar"; fi
+  - if $USE_PHIVE; then wget -O phive.phar.asc "https://phar.io/releases/phive.phar.asc"; fi
+  - if $USE_PHIVE; then gpg --keyserver hkps.pool.sks-keyservers.net --recv-keys 0x9D8A98B29B2D5D79; fi
+  - if $USE_PHIVE; then gpg --verify phive.phar.asc phive.phar; fi
+  - if $USE_PHIVE; then rm phive.phar.asc; fi
+  - if $USE_PHIVE; then chmod +x phive.phar; fi
+  - if $USE_PHIVE; then mkdir -p "$HOME/bin"; fi
+  - if $USE_PHIVE; then export PATH="$HOME/bin:$PATH"; fi
+  - if $USE_PHIVE; then mv phive.phar $HOME/bin/phive; fi
+
 install:
   - composer install
-  - composer require --dev phpstan/phpstan
-  - composer require --dev squizlabs/php_codesniffer
+  - if $USE_PHIVE; then phive install --trust-gpg-keys CF1A108D0E7AE720,31C7E470E2138192; fi
 
 script:
-  - vendor/bin/phpcs
-  - vendor/bin/phpstan analyse src --level max
+  - if $USE_PHIVE; then tools/phpcs; fi
+  - if $USE_PHIVE; then tools/phpstan analyse src --level max; fi
   - vendor/bin/phpunit --testsuite alltest
