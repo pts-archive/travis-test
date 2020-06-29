@@ -33,7 +33,7 @@ before_install:
 
 install:
   - composer install
-  - phive install
+  - phive --no-progress install --trust-gpg-keys CF1A108D0E7AE720,31C7E470E2138192
 
 script:
   - tools/phpcs
