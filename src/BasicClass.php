@@ -4,7 +4,7 @@ namespace App;
 
 final class BasicClass
 {
-    public function getName()
+    public function getName(): string
     {
         return __CLASS__;
     }
