@@ -14,7 +14,11 @@ notifications:
 
 cache:
  directories:
-   - $HOME/.composer/cache/files
+    - "$HOME/.phive"
+    - "$HOME/.phive/phars"
+    - "$HOME/.cache/composer"
+    - "$HOME/.composer/cache"
+    - "$HOME/.gnupg"
 
 before_install:
   - wget -O phive.phar "https://phar.io/releases/phive.phar"
@@ -23,6 +27,8 @@ before_install:
   - gpg --verify phive.phar.asc phive.phar
   - rm phive.phar.asc
   - chmod +x phive.phar
+  - mkdir -p "$HOME/bin"
+  - export PATH="$HOME/bin:$PATH"
   - mv phive.phar /usr/local/bin/phive
 
 install:
