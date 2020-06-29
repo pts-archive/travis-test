@@ -19,14 +19,6 @@ notifications:
     on_success: never
     on_failure: always
 
-cache:
- directories:
-    - "$HOME/.phive"
-    - "$HOME/.phive/phars"
-    - "$HOME/.cache/composer"
-    - "$HOME/.composer/cache"
-    - "$HOME/.gnupg"
-
 before_install:
   - if $USE_PHIVE; then wget -O phive.phar "https://phar.io/releases/phive.phar"; fi
   - if $USE_PHIVE; then wget -O phive.phar.asc "https://phar.io/releases/phive.phar.asc"; fi
