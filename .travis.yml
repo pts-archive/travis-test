@@ -19,4 +19,4 @@ cache:
 install: composer install
 
 script:
-  - phpunit --testsuite alltest
+  - vendor/bin/phpunit --testsuite alltest
