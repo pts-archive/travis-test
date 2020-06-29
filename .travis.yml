@@ -37,5 +37,5 @@ install:
 
 script:
   - tools/phpcs
-  - tools/phpstan
+  - tools/phpstan analyse src --level max
   - vendor/bin/phpunit --testsuite alltest
