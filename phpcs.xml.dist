@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ruleset name="phrozer">
-  <description>phrozer coding standard</description>
+<ruleset name="travis-test">
+  <description>coding standard</description>
 
   <config name="testVersion" value="7.0.0"/>
 
